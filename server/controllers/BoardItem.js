@@ -7,12 +7,16 @@ const Account = models.Account;
 // Renders the board page
 const boardPage = (req, res) => Account.AccountModel.
     findById(req.session.account._id, 'lastBoard', (err, doc) => {
-      if (err || !doc.lastBoard) {
+      if (err) {
         return res.status(401).json({ error: 'Board not found' });
+      } else if (!doc.lastBoard) {
+        return res.redirect('/boards');
       }
       return Board.BoardModel.findById(doc.lastBoard, (err2, doc2) => {
-        if (err2 || !doc2) {
+        if (err2) {
           return res.status(401).json({ error: 'Board not found' });
+        } else if (!doc2) {
+          return res.redirect('/boards');
         }
         return res.render('board', { csrfToken: req.csrfToken() });
       });

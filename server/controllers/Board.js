@@ -1,6 +1,7 @@
 const models = require('../models');
 
 const Board = models.Board;
+const BoardItem = models.BoardItem;
 
 // Renders the boards page
 const makerPage = (req, res) => res.render('app', { csrfToken: req.csrfToken() });
@@ -44,10 +45,16 @@ const deleteBoard = (req, res) => {
       console.log(err);
       return res.status(400).json({ error: 'An error occurred' });
     }
-    return res.json({ redirect: '/boards' });
+    return BoardItem.BoardItemModel.remove({ board: req.body.boardID }, (err2) => {
+      if (err2) {
+        console.log(err2);
+        return res.status(400).
+          json({ error: 'An error occurred. Board Items could not be deleted.' });
+      }
+      return res.json({ redirect: '/boards' });
+    });
   });
 };
-
 // gets all of the boards for the current user
 const getBoards = (request, response) => {
   const req = request;
