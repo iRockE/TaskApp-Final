@@ -108,6 +108,9 @@ const changePassword = (request, response) => {
   if (req.body.pass !== req.body.pass2) {
     return res.status(400).json({ error: 'Passwords do not match' });
   }
+  if (req.body.oldPass === req.body.pass) {
+    return res.status(400).json({ error: 'Old and new passwords cannot be the same' });
+  }
   return Account.AccountModel.
     authenticate(req.session.account.username, req.body.oldPass, (err, account) => {
       if (err || !account) {

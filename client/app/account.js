@@ -20,6 +20,11 @@ const handlePasswordChange = (e) => {
         return false;
     }
 
+    if ($("#oldPass").val() == $("#pass").val()) {
+        handleError("Old and new passwords cannot be the same");
+        return false;
+    }
+
     sendAjax('POST', $("#passwordForm").attr("action"), $("#passwordForm").serialize(), redirect);
 
     return false;
