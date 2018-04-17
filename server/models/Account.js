@@ -29,6 +29,10 @@ const AccountSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Board',
   },
+  friends: [{
+    type: mongoose.Schema.ObjectId,
+    ref: 'Account',
+  }],
   createdData: {
     type: Date,
     default: Date.now,

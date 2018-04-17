@@ -20,6 +20,10 @@ const router = (app) => {
   app.get('/getBoardItems', mid.requiresLogin, controllers.BoardItem.getBoardItems);
   app.post('/deleteBoardItem', mid.requiresLogin, controllers.BoardItem.delete);
   app.post('/changeStatus', mid.requiresLogin, controllers.BoardItem.changeStatus);
+  app.post('/friends', mid.requiresLogin, controllers.Friends.addFriend);
+  app.get('/friends', mid.requiresLogin, controllers.Friends.friendsPage);
+  app.get('/getFriends', mid.requiresLogin, controllers.Friends.getFriends);
+  app.post('/removeFriend', mid.requiresLogin, controllers.Friends.removeFriend);
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
   app.get('*', mid.requiresLogin, mid.requiresLogout);
 };

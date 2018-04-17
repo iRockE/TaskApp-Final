@@ -54,7 +54,7 @@ nav {
     float: left;
     color: white;
     font-size: 1.3em;
-    width: 120px;
+    width: 110px;
     a {
         @extend %navlink-link-style;
         &:link, &:visited, &:hover, &:active{
@@ -73,7 +73,7 @@ nav {
     }
 }
 
-.boardForm, .boardItemForm {
+.boardForm, .boardItemForm, .friendForm {
     text-align: center;
     width: 100%;
     margin: 0px;
@@ -97,7 +97,7 @@ nav {
 }
 
 @media only screen and (max-width: 560px) {
-    .boardForm, .boardItemForm {
+    .boardForm, .boardItemForm, .friendForm {
         text-align: left;
         input {
             width: 100% !important;
@@ -105,7 +105,7 @@ nav {
     }
 }
 
-.makeBoardSubmit {
+.makeBoardSubmit, .addFriendSubmit {
     transition: background-color 0.2s ease;
     display: inline-block;
     width: 100px;
@@ -124,7 +124,7 @@ nav {
     }
 }
 
-.deleteBoard, .deleteBoardItem {
+.deleteBoard, .deleteBoardItem, .removeFriend {
     z-index: 100;
     cursor: pointer;
     background-color: #390404;
@@ -255,7 +255,7 @@ nav {
     transform: rotate(330deg);
 }
 
-#boards {
+#boards, #friends {
     width: 70%;
     margin: 0 auto;
     margin-top: 60px;
@@ -264,12 +264,12 @@ nav {
 }
 
 @media only screen and (max-width: 560px) {
-    #boards {
+    #boards, #friends {
         width: 100%;
     }
 }
 
-.board, .item {
+.board, .item, .friend {
     margin: 0 auto;
     margin-top: 2px;
     margin-bottom: 2px;
@@ -286,14 +286,14 @@ nav {
     transition: background-color 0.4s ease;
 }
 
-h3.emptyBoard {
+h3.emptyBoard, h3.emptyFriends {
     width: 400px;
     font-size: 1.5em;
     margin: 60 auto 0;
     text-align: center;
 }
 
-h3.boardName {
+h3.boardName, h3.friendName {
     float:left;
     font-weight: bold;
     box-sizing: border-box;
@@ -301,6 +301,10 @@ h3.boardName {
     padding: 0 40px;
     font-size: 32px;
     margin-top: 20px;
+}
+
+h3.friendName {
+    margin: 0 0 15px;
 }
 
 .itemList {
