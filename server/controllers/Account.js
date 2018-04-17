@@ -50,7 +50,11 @@ const signup = (request, response) => {
   if (!req.body.username || !req.body.pass || !req.body.pass2) {
     return res.status(400).json({ error: 'All fields are required' });
   }
-
+  const pRegex = new RegExp('^(?=.*[a-zA-Z])(?=.*[0-9])(?=.{6,})');
+  if (!pRegex.test(req.body.pass)) {
+    return res.status(400)
+        .json({ error: 'Password must be at least 6 characters with one letter and one number' });
+  }
   if (req.body.pass !== req.body.pass2) {
     return res.status(400).json({ error: 'Passwords do not match' });
   }
@@ -96,7 +100,11 @@ const changePassword = (request, response) => {
   if (!req.body.oldPass || !req.body.pass || !req.body.pass2) {
     return res.status(400).json({ error: 'All fields are required' });
   }
-
+  const pRegex = new RegExp('^(?=.*[a-zA-Z])(?=.*[0-9])(?=.{6,})');
+  if (!pRegex.test(req.body.pass)) {
+    return res.status(400)
+        .json({ error: 'Password must be at least 6 characters with one letter and one number' });
+  }
   if (req.body.pass !== req.body.pass2) {
     return res.status(400).json({ error: 'Passwords do not match' });
   }

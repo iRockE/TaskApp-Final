@@ -9,6 +9,12 @@ const handlePasswordChange = (e) => {
         return false;
     }
 
+    let pRegex = new RegExp("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.{6,})");
+    if (!pRegex.test($("#pass").val())) {
+        handleError("Password must be at least 6 characters with one letter and one number");
+        return false;
+    }
+
     if ($("#pass").val() != $("#pass2").val()) {
         handleError("Passwords do not match");
         return false;
