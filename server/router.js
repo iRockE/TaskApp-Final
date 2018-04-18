@@ -11,6 +11,7 @@ const router = (app) => {
   app.get('/logout', mid.requiresLogin, controllers.Account.logout);
   app.get('/boards', mid.requiresLogin, controllers.Board.makerPage);
   app.get('/account', mid.requiresLogin, controllers.Account.accountPage);
+  app.get('/getUsername', mid.requiresLogin, controllers.Account.getUsername);
   app.get('/premium', mid.requiresLogin, controllers.Account.premiumPage);
   app.post('/boards', mid.requiresLogin, controllers.Board.make);
   app.post('/deleteBoard', mid.requiresLogin, controllers.Board.delete);

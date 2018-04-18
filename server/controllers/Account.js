@@ -132,6 +132,11 @@ const accountPage = (req, res) => res.render('account', { csrfToken: req.csrfTok
 // Renders the premium page
 const premiumPage = (req, res) => res.render('premium', { csrfToken: req.csrfToken() });
 
+// Gets the username of the current user
+const getUsername = (req, res) => {
+  res.json(req.session.account.username);
+};
+
 // Gets the CSRF token out of the request
 const getToken = (request, response) => {
   const req = request;
@@ -151,4 +156,5 @@ module.exports.login = login;
 module.exports.logout = logout;
 module.exports.signup = signup;
 module.exports.changePassword = changePassword;
+module.exports.getUsername = getUsername;
 module.exports.getToken = getToken;
