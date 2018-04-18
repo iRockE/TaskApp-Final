@@ -67,18 +67,21 @@ const handleDrop = (e, status) => {
 // Creates form to make a board item through JSX
 const BoardItemForm = (props) => {
     return (
-        <form id="boardItemForm" 
-            name="boardItemForm"
-            onSubmit={handleBoardItem}
-            action="/board"
-            method="POST"
-            className="boardItemForm"
-            >
-            <input id="boardItemName" type="text" name="name" placeholder="Name" />   
-            <input id="boardItemDescription" type="text" name="description" placeholder="Description" />
-            <input id="clientCSRF" type="hidden" name="_csrf" value={props.csrf} />
-            <input className="makeBoardSubmit" type="submit" value="Make Item" />
-        </form>
+        <div>
+            <form id="boardItemForm" 
+                name="boardItemForm"
+                onSubmit={handleBoardItem}
+                action="/board"
+                method="POST"
+                className="boardItemForm"
+                >
+                <input id="boardItemName" type="text" name="name" placeholder="Name" />   
+                <input id="boardItemDescription" type="text" name="description" placeholder="Description" />
+                <input id="clientCSRF" type="hidden" name="_csrf" value={props.csrf} />
+                <input className="makeBoardSubmit" type="submit" value="Make Item" />
+            </form>
+            <a className="shareBoard" href="/share">Share</a>
+        </div>
     );
 };
 

@@ -124,6 +124,33 @@ nav {
     }
 }
 
+.shareBoard {
+    transition: background-color 0.2s ease;
+    display: block;
+    margin: 20px auto 0;
+    text-align: center;
+    width: 120px;
+    padding: 10px 0;
+    background-color: $grey-4;
+    border: none;
+    outline: none;
+    color: white;
+    text-decoration: none;
+    &:link, &:visited, &:hover, &:active {
+        color: white;
+    }
+    &:hover {
+        transition: background-color 0.4s ease;
+        background-color: $grey-3;
+    }
+}
+
+@media only screen and (max-width: 560px) {
+    .shareBoard {
+        width: 80% !important;
+    }
+}
+
 .deleteBoard, .deleteBoardItem, .removeFriend {
     z-index: 100;
     cursor: pointer;
