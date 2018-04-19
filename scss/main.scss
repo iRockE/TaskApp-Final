@@ -108,14 +108,13 @@ $primary-font: 'Questrial', sans-serif;
 %itemList {
     width: 70%;
     margin: 0 auto;
-    margin-top: 60px;
+    margin-top: 40px;
     padding: 0 10px;
     box-sizing: border-box;
 }
 %emptyItemList {
-    width: 400px;
     font-size: 1.5em;
-    margin: 60 auto 0;
+    margin: 30px auto 30px;
     text-align: center;
 }
 %itemRow {
@@ -125,7 +124,6 @@ $primary-font: 'Questrial', sans-serif;
     background-color: $grey-3;
     transition: background-color 0.2s ease;
     padding: 10px;
-    min-height:60px;
     overflow: hidden;
     word-wrap: break-word;
 }
@@ -238,7 +236,7 @@ nav {
 }
 .pageHeader {
     text-align: center;
-    margin: 100px 0 10px;;
+    margin: 80px 0 10px;;
     font-size: 40px;
 }
 #errorMessageWrapper {
@@ -246,7 +244,7 @@ nav {
     position: absolute;
     display:none;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 10px;
     width: 100%;
     overflow: hidden;
     h3 {
@@ -301,6 +299,12 @@ nav {
         }
     }
 }
+#sharedBoards {
+    .sharedHeader {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+}
 .emptyBoard {
     @extend %emptyItemList;
 }
@@ -321,7 +325,7 @@ nav {
     @extend %itemRow;
 }
 .boardItemList {
-    padding-top: 60px;
+    padding-top: 40px;
     overflow: auto;
 }
 .shareBoard {
@@ -361,6 +365,28 @@ nav {
     a {
         @extend %appButton;
     }
+}
+#sharedFriends, #unsharedFriends {
+    @extend %itemList;
+    margin-top: 0px;
+    @media only screen and (max-width: 560px) {
+        width: 100%;
+    }
+    .sharedHeader {
+        text-align: center;
+        margin: 40px 0 20px;
+    }
+    .friend {
+        @extend %itemRow;
+        padding: 20px 0;
+        .friendName {
+            @extend %itemName;
+            margin: 0;
+        }
+    }
+}
+#sharedFriends .friend {
+    background-color: $green-1;
 }
 /*#endregion */
 
@@ -416,7 +442,7 @@ nav {
 
 /*#region premium*/
 #premiumContent {
-    margin: 100px 0 20px;
+    margin: 0 0 20px;
     text-align: center;
     h3 {
         margin: 0 0 80px;

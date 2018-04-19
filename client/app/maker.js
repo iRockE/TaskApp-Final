@@ -91,7 +91,6 @@ const SharedBoardList = function(props) {
     if (props.boards.length === 0){
         return (
             <div className="boardList">
-                <h3 className="emptyBoard">No boards yet</h3>
             </div>
         );
     }
@@ -107,7 +106,7 @@ const SharedBoardList = function(props) {
 
     return (
         <div className="sharedBoardList">
-            <h3>Shared with you:</h3>
+            <h3 className="sharedHeader">Shared with you:</h3>
             {boardNodes}
         </div>
     );
