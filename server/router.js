@@ -15,6 +15,7 @@ const router = (app) => {
   app.get('/premium', mid.requiresLogin, controllers.Account.premiumPage);
   app.post('/boards', mid.requiresLogin, controllers.Board.make);
   app.post('/deleteBoard', mid.requiresLogin, controllers.Board.delete);
+  app.post('/unfollowBoard', mid.requiresLogin, controllers.Share.unfollowBoard);
   app.get('/board', mid.requiresLogin, controllers.BoardItem.boardPage);
   app.post('/board', mid.requiresLogin, controllers.BoardItem.make);
   app.post('/loadBoard', mid.requiresLogin, controllers.BoardItem.load);

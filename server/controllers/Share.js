@@ -63,6 +63,24 @@ const unshareFriend = (req, res) => {
   });
 };
 
+// Share the current board with the given friend
+const unfollowBoard = (req, res) => {
+  if (!req.body.boardID) {
+    return res.status(400).json({ error: 'Missing board ID' });
+  }
+  const shareData = {
+    user: req.session.account._id,
+    board: req.body.boardID,
+  };
+  return Share.ShareModel.remove(shareData, (err) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({ error: 'An error occurred' });
+    }
+    return res.json({ redirect: '/boards' });
+  });
+};
+
 // gets all of the friends for the current user and
 // sort by shared and unshared for the current board
 const getSharedFriends = (request, response) => {
@@ -105,4 +123,5 @@ const getSharedFriends = (request, response) => {
 module.exports.sharePage = sharePage;
 module.exports.shareFriend = shareFriend;
 module.exports.unshareFriend = unshareFriend;
+module.exports.unfollowBoard = unfollowBoard;
 module.exports.getSharedFriends = getSharedFriends;

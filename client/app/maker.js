@@ -43,6 +43,22 @@ const deleteBoard = (e, boardID) => {
     return false;
 };
 
+// Unfollow a board
+const unfollowBoard = (e, boardID) => {
+    $("#errorMessageWrapper").fadeOut(400, "swing");
+
+    if($("#boardID").val() == ''){
+        handleError("Board does not exist");
+        return false;
+    }
+
+    sendAjax('POST', "/unfollowBoard", `${$("#clientCSRF").serialize()}&boardID=${boardID}`, function() {
+        loadBoardsFromServer();
+    });
+    e.stopPropagation();
+    return false;
+};
+
 // Makes a board creation form through JSX
 const BoardForm = (props) => {
     return (
@@ -98,7 +114,7 @@ const SharedBoardList = function(props) {
     const boardNodes = props.boards.map(function(board) {
         return (
             <div key={board._id} className="board" onClick={(e) => loadBoard(e, board._id)}>
-                <button className="deleteBoard" onClick={(e) => deleteBoard(e, board._id)}></button>
+                <button className="unfollowBoard" onClick={(e) => unfollowBoard(e, board._id)}>Unfollow</button>
                 <h3 className="boardName">{board.name}</h3>
             </div>
         );
