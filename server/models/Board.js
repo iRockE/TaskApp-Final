@@ -23,11 +23,6 @@ const BoardSchema = new mongoose.Schema({
     ref: 'Account',
   },
 
-  shared: [{
-    type: mongoose.Schema.ObjectId,
-    ref: 'Account',
-  }],
-
   createdData: {
     type: Date,
     default: Date.now,

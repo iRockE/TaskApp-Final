@@ -1,7 +1,7 @@
 const models = require('../models');
 
 const Account = models.Account;
-const Board = models.Board;
+const Share = models.Share;
 
 // Renders the boards page
 const sharePage = (req, res) => res.render('share', { csrfToken: req.csrfToken() });
@@ -16,17 +16,26 @@ const shareFriend = (req, res) => {
       console.log(err);
       return res.status(400).json({ error: 'An error occurred' });
     }
-    return Board.BoardModel.findByIdAndUpdate(
-      accountDoc.lastBoard,
-      { $addToSet: { shared: req.body.friendID } },
-      { safe: true, upsert: true, new: true },
-      (err2, boardDoc) => {
-        if (err2 || !boardDoc) {
-          console.log(err2);
-          return res.status(400).json({ error: 'An error occurred' });
-        }
-        return res.json({ redirect: '/share' });
-      });
+    const shareData = {
+      user: req.body.friendID,
+      board: accountDoc.lastBoard,
+    };
+
+    const newShare = new Share.ShareModel(shareData);
+
+    const sharePromise = newShare.save();
+
+    sharePromise.then(() => res.json({ redirect: '/share' }));
+
+    sharePromise.catch((err2) => {
+      console.log(err2);
+      if (err2.code === 11000) {
+        return res.status(400).json({ error: 'Share already exists.' });
+      }
+      return res.status(400).json({ error: 'An error occurred' });
+    });
+
+    return sharePromise;
   });
 };
 
@@ -40,19 +49,19 @@ const unshareFriend = (req, res) => {
       console.log(err);
       return res.status(400).json({ error: 'An error occurred' });
     }
-    return Board.BoardModel.findByIdAndUpdate(
-      accountDoc.lastBoard,
-      { $pull: { shared: req.body.friendID } },
-      (err2) => {
-        if (err2) {
-          console.log(err2);
-          return res.status(400).json({ error: 'An error occurred' });
-        }
-        return res.json({ redirect: '/share' });
-      });
+    const shareData = {
+      user: req.body.friendID,
+      board: accountDoc.lastBoard,
+    };
+    return Share.ShareModel.remove(shareData, (err2) => {
+      if (err2) {
+        console.log(err2);
+        return res.status(400).json({ error: 'An error occurred' });
+      }
+      return res.json({ redirect: '/share' });
+    });
   });
 };
-
 // gets all of the friends for the current user and
 // sort by shared and unshared for the current board
 const getSharedFriends = (request, response) => {
@@ -63,7 +72,10 @@ const getSharedFriends = (request, response) => {
       console.log(err);
       return res.status(400).json({ error: 'An error occurred' });
     }
-    return Board.BoardModel.findById(accountDoc.lastBoard, (err2, boardDoc) => {
+    const shareData = {
+      board: accountDoc.lastBoard,
+    };
+    return Share.ShareModel.find(shareData, (err2, sharesDoc) => {
       if (err2) {
         console.log(err2);
         return res.status(400).json({ error: 'An error occurred' });
@@ -77,7 +89,7 @@ const getSharedFriends = (request, response) => {
           const sharedFriends = [];
           const unsharedFriends = [];
           friends.forEach(friend => {
-            if (boardDoc.shared.some((sharedFriendId) => sharedFriendId.equals(friend._id))) {
+            if (sharesDoc.some((shareDoc) => shareDoc.user.equals(friend._id))) {
               sharedFriends.push(friend);
             } else {
               unsharedFriends.push(friend);
