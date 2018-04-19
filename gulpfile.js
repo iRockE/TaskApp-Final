@@ -82,6 +82,15 @@ gulp.task('sass', () => {
       }))
       .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest('./hosted/'));
+    gulp.src(['./client/app/share.js', './client/helper/*.js'])
+      .pipe(sourcemaps.init())
+      .pipe(concat('shareBundle.js'))
+      .pipe(babel({
+        presets: ['env', 'react'],
+        minified: true,
+      }))
+      .pipe(sourcemaps.write('.'))
+      .pipe(gulp.dest('./hosted/'));
     gulp.src(['./client/app/account.js', './client/helper/*.js'])
       .pipe(sourcemaps.init())
       .pipe(concat('accountBundle.js'))

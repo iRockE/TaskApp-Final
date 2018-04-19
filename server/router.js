@@ -25,6 +25,10 @@ const router = (app) => {
   app.get('/friends', mid.requiresLogin, controllers.Friends.friendsPage);
   app.get('/getFriends', mid.requiresLogin, controllers.Friends.getFriends);
   app.post('/removeFriend', mid.requiresLogin, controllers.Friends.removeFriend);
+  app.get('/share', mid.requiresLogin, controllers.Share.sharePage);
+  app.post('/shareFriend', mid.requiresLogin, controllers.Share.shareFriend);
+  app.post('/unshareFriend', mid.requiresLogin, controllers.Share.unshareFriend);
+  app.get('/getShared', mid.requiresLogin, controllers.Share.getSharedFriends);
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
   app.get('*', mid.requiresLogin, mid.requiresLogout);
 };
