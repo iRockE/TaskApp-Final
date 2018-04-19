@@ -78,7 +78,7 @@ const BoardItemForm = (props) => {
                 <input id="boardItemName" type="text" name="name" placeholder="Name" />   
                 <input id="boardItemDescription" type="text" name="description" placeholder="Description" />
                 <input id="clientCSRF" type="hidden" name="_csrf" value={props.csrf} />
-                <input className="makeBoardSubmit" type="submit" value="Make Item" />
+                <input className="makeBoardItemSubmit" type="submit" value="Make Item" />
             </form>
             <a className="shareBoard" href="/share">Share</a>
         </div>
@@ -123,7 +123,7 @@ const BoardList = function(props) {
     });
 
     return (
-        <div className="itemList">
+        <div className="boardItemList">
             <div id="toDo" onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e, 'toDo')}>
                 <h2>To Do</h2>
                 {toDoNodes}

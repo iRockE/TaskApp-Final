@@ -62,6 +62,7 @@ const unshareFriend = (req, res) => {
     });
   });
 };
+
 // gets all of the friends for the current user and
 // sort by shared and unshared for the current board
 const getSharedFriends = (request, response) => {

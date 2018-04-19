@@ -86,11 +86,43 @@ const BoardList = function(props) {
     );
 };
 
+// Makes a list of shared boards through JSX
+const SharedBoardList = function(props) {
+    if (props.boards.length === 0){
+        return (
+            <div className="boardList">
+                <h3 className="emptyBoard">No boards yet</h3>
+            </div>
+        );
+    }
+
+    const boardNodes = props.boards.map(function(board) {
+        return (
+            <div key={board._id} className="board" onClick={(e) => loadBoard(e, board._id)}>
+                <button className="deleteBoard" onClick={(e) => deleteBoard(e, board._id)}></button>
+                <h3 className="boardName">{board.name}</h3>
+            </div>
+        );
+    });
+
+    return (
+        <div className="sharedBoardList">
+            <h3>Shared with you:</h3>
+            {boardNodes}
+        </div>
+    );
+};
+
 // Loads the boards from the server so that they may be displayed
 const loadBoardsFromServer = () => {
     sendAjax('GET', '/getBoards', null, (data) => {
         ReactDOM.render(
-            <BoardList boards={data.boards} />, document.querySelector("#boards")
+            <BoardList boards={data.boards} sharedBoards={data.sharedBoards}/>, 
+            document.querySelector("#boards")
+        );
+        ReactDOM.render(
+            <SharedBoardList boards={data.sharedBoards}/>, 
+            document.querySelector("#sharedBoards")
         );
     });
 };

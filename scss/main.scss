@@ -1,3 +1,4 @@
+/*#region variables */
 $grey-1: #7f7f7f;
 $grey-2: #666666;
 $grey-3: #4c4c4c;
@@ -11,7 +12,181 @@ $yellow-fade: #b1a560;
 $green-fade: #46664a;
 
 $primary-font: 'Questrial', sans-serif;
+/*#endregion*/
 
+/*#region extends */
+%accountForm {
+    width: 200px;
+    height: 300px;
+    margin: 0 auto;
+    padding: 0;
+    font-size: 1.2em;
+    h3 {
+        text-align: center;
+    }
+    input {
+        &[type=text], &[type=password] {
+            text-align: center;
+            font-size: 1.1em;
+            width: 100%;
+            border: none;
+            outline: none;
+            box-shadow: none;
+            display: block;
+            margin: 0 auto 5;
+            &:focus {
+                outline: none;
+                box-shadow: none;
+            }
+        }
+        &[type=submit] {
+            transition: background-color 0.2s ease;
+            display: block;
+            text-align: center;
+            margin: 0 auto;
+            font-size: 1.2em;
+            width: 100%;
+            background-color: $grey-5;
+            border: none;
+            padding: 3px 0px;
+            color: white;
+            text-decoration: none;
+            outline: none;
+            &:link, &:visited, &:active, &:hover{
+                color: white;
+            }
+            &:hover{
+                transition: background-color 0.4s ease;
+                background-color: $grey-4;
+            } 
+        }
+    }
+}
+%upperSection {
+    text-align: center;
+    width: 100%;
+    margin: 0px;
+    padding: 10px 0 10px;
+    background-color: $grey-2;
+}
+%upperForm {
+    @extend %upperSection;
+    input {
+        height: 30px;
+        outline: none;
+        border: none;
+        &[type=text] {
+            padding-left: 5px;    
+            width: 200px;
+        }
+        &[type=submit] {
+            transition: background-color 0.2s ease;
+            display: inline-block;
+            width: 100px;
+            background-color: $grey-4;
+            color: white;
+            text-decoration: none;
+            &:link, &:visited, &:hover, &:active {
+                color: white;
+            }
+            &:hover {
+                transition: background-color 0.4s ease;
+                background-color: $grey-3;
+            }
+        }
+    }
+    @media only screen and (max-width: 560px) {
+        text-align: left;
+        input {
+            width: 100% !important;
+            &[type=text] {
+                margin-bottom: 2px;
+            }
+        }
+    }
+}
+%itemList {
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 60px;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+%emptyItemList {
+    width: 400px;
+    font-size: 1.5em;
+    margin: 60 auto 0;
+    text-align: center;
+}
+%itemRow {
+    margin: 0 auto;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    background-color: $grey-3;
+    transition: background-color 0.2s ease;
+    padding: 10px;
+    min-height:60px;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+%itemName {
+    float:left;
+    font-weight: bold;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 40px;
+    font-size: 32px;
+    margin-top: 20px;
+}
+%appButton {
+    transition: background-color 0.2s ease;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    width: 120px;
+    padding: 10px 0;
+    background-color: $grey-4;
+    border: none;
+    outline: none;
+    color: white;
+    text-decoration: none;
+    &:link, &:visited, &:hover, &:active {
+        color: white;
+    }
+    &:hover {
+        transition: background-color 0.4s ease;
+        background-color: $grey-3;
+    }
+    @media only screen and (max-width: 560px) {
+        width: 80% !important;
+    }
+}
+%deleteButton {
+    z-index: 100;
+    cursor: pointer;
+    background-color: #390404;
+    background-image: url(/assets/img/deleteButton.jpg);
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    transition: background-image 0.2s ease;
+    display: block;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    float: right;
+    outline: none;
+    border: none;
+    position: relative;
+    top: -5px;
+    right: -5px;
+    &:hover {
+        background-image: url(/assets/img/deleteButtonHover.jpg);
+        transition: background-image 0.4s ease;
+    }
+}
+/*#endregion */
+
+/*#region global*/
 html, body {
     background-color: $grey-1;
     font-family: $primary-font;
@@ -20,14 +195,6 @@ html, body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-}
-
-#logo {
-    height: 40px;
-    width: 40;
-    padding-top: 5px;
-    float:left;
-    border-radius: 8px;
 }
 
 nav {
@@ -65,233 +232,15 @@ nav {
             background-color: $green-2;
         }
     }
-}
-
-@media only screen and (max-width: 560px) {
-    .navlink {
+    @media only screen and (max-width: 560px) {
         width: 100%;
     }
 }
-
-.boardForm, .boardItemForm, .friendForm {
+.pageHeader {
     text-align: center;
-    width: 100%;
-    margin: 0px;
-    padding: 10px 0 8px;
-    background-color: $grey-2;
-    input[type=text] {
-        margin-bottom: 2px;
-        padding-left: 5px;
-        height: 30px;
-        width: 200px;
-        outline: none;
-        border: none;
-    }
-    #boardItemName {
-        margin-right: 2px;
-        width: 150px;
-    }
-    #boardItemDescription {
-        width: 300px;
-    }
+    margin: 100px 0 10px;;
+    font-size: 40px;
 }
-
-@media only screen and (max-width: 560px) {
-    .boardForm, .boardItemForm, .friendForm {
-        text-align: left;
-        input {
-            width: 100% !important;
-        }
-    }
-}
-
-.makeBoardSubmit, .addFriendSubmit {
-    transition: background-color 0.2s ease;
-    display: inline-block;
-    width: 100px;
-    height: 30px;
-    background-color: $grey-4;
-    border: none;
-    outline: none;
-    color: white;
-    text-decoration: none;
-    &:link, &:visited, &:hover, &:active {
-        color: white;
-    }
-    &:hover {
-        transition: background-color 0.4s ease;
-        background-color: $grey-3;
-    }
-}
-
-.shareBoard {
-    transition: background-color 0.2s ease;
-    display: block;
-    margin: 20px auto 0;
-    text-align: center;
-    width: 120px;
-    padding: 10px 0;
-    background-color: $grey-4;
-    border: none;
-    outline: none;
-    color: white;
-    text-decoration: none;
-    &:link, &:visited, &:hover, &:active {
-        color: white;
-    }
-    &:hover {
-        transition: background-color 0.4s ease;
-        background-color: $grey-3;
-    }
-}
-
-@media only screen and (max-width: 560px) {
-    .shareBoard {
-        width: 80% !important;
-    }
-}
-
-#shareTop {
-    text-align: center;
-    width: 100%;
-    margin: 0px;
-    padding: 10px 0 8px;
-    background-color: $grey-2;
-    a {
-        transition: background-color 0.2s ease;
-        display: inline-block;
-        width: 200px;
-        padding: 10px 0;
-        background-color: $grey-4;
-        border: none;
-        outline: none;
-        color: white;
-        text-decoration: none;
-        &:link, &:visited, &:hover, &:active {
-            color: white;
-        }
-        &:hover {
-            transition: background-color 0.4s ease;
-            background-color: $grey-3;
-        }
-    }
-}
-
-@media only screen and (max-width: 560px) {
-    #shareTop {
-        a {
-            width: 100% !important;
-        }
-    }
-}
-
-.deleteBoard, .deleteBoardItem, .removeFriend {
-    z-index: 100;
-    cursor: pointer;
-    background-color: #390404;
-    background-image: url(/assets/img/deleteButton.jpg);
-    background-repeat: no-repeat;
-    background-size: 20px 20px;
-    transition: background-image 0.2s ease;
-    display: block;
-    width: 20px;
-    height: 20px;
-    padding: 0;
-    float: right;
-    outline: none;
-    border: none;
-    position: relative;
-    top: -5px;
-    right: -5px;
-    &:hover {
-        background-image: url(/assets/img/deleteButtonHover.jpg);
-        transition: background-image 0.4s ease;
-    }
-}
-.loginHeader{
-    margin-top: 40px;
-    padding: 20px 0;
-    font-size: 80px;
-    text-decoration: none;
-    display: block;
-    text-align: center;
-    &:link, &:visited, &:active, &:hover{
-        color: $grey-5;
-    }
-}
-
-.mainForm, .passwordForm {
-    width: 200px;
-    height: 300px;
-    margin: 0 auto;
-    padding-top: 130px;
-    font-size: 1.2em;
-    h3 {
-        text-align: center;
-    } 
-}
-
-#accountPage {
-    margin-top: 80px;
-    h3 {
-        margin: 0 0 20px;
-        text-align: center;
-        font-size: 30px;
-    }
-    h4 {
-        margin: 0 0 20px;
-        text-align: center;
-        font-size: 22px;
-    }
-}
-#accountForms {
-    margin: 80px 0 0;
-    form {
-        padding-top: 0;
-    }
-    h3 {
-        margin: 0 0 30px;
-    }
-}
-
-.formSubmit {
-    transition: background-color 0.2s ease;
-    display: block;
-    text-align: center;
-    margin: 0 auto;
-    font-size: 1.2em;
-    width: 100%;
-    background-color: $grey-5;
-    border: none;
-    padding: 3px 0px;
-    color: white;
-    text-decoration: none;
-    outline: none;
-    &:link, &:visited, &:active, &:hover{
-        color: white;
-    }
-    &:hover{
-        transition: background-color 0.4s ease;
-        background-color: $grey-4;
-    }
-}
-
-#user, #pass, #pass2, #oldPass {
-    text-align: center;
-    font-size: 1.1em;
-    width: 100%;
-    border: none;
-    outline: none;
-    box-shadow: none;
-    display: block;
-    margin: 0 auto 5;
-}
-
-#user:focus, #pass:focus, #pass2:focus {
-    outline: none;
-    box-shadow: none;
-}
-
 #errorMessageWrapper {
     cursor: pointer;
     position: absolute;
@@ -309,90 +258,79 @@ nav {
         color: white;
     }
 }
+/*#endregion */
 
-#speech {
-    height: 120px;
-    width: 250px;
-    z-index:300;
-}
-
-#board {
-    z-index: 225;
-    margin-top: -20px;
-    margin-left: 135px;
-    height: 450px;
-    width: 300px;
-    -ms-transform: rotate(330deg);
-    -webkit-transform: rotate(330deg); 
-    transform: rotate(330deg);
-}
-
-#boards, #friends {
-    width: 70%;
-    margin: 0 auto;
-    margin-top: 60px;
-    padding: 0 10px;
-    box-sizing: border-box;
-}
-
-@media only screen and (max-width: 560px) {
-    #boards, #friends {
-        width: 100%;
+/*#region login*/
+.loginHeader {
+    margin-top: 40px;
+    padding: 20px 0;
+    font-size: 80px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    &:link, &:visited, &:active, &:hover{
+        color: $grey-5;
     }
 }
-
-.board, .item, .friend {
-    margin: 0 auto;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    background-color: $grey-3;
-    transition: background-color 0.2s ease;
-    padding: 10px;
-    min-height:60px;
-    overflow: hidden;
-    word-wrap: break-word;
+.mainForm {
+    @extend %accountForm;
+    padding-top: 130px;
 }
+/*#endregion */
 
-.board:hover {
-    background-color: $grey-2;
-    transition: background-color 0.4s ease;
+/*#region boards*/
+.boardForm {
+    @extend %upperForm;
 }
-
-h3.emptyBoard, h3.emptyFriends {
-    width: 400px;
-    font-size: 1.5em;
-    margin: 60 auto 0;
-    text-align: center;
+.deleteBoard {
+    @extend %deleteButton;
 }
-
-h3.boardName, h3.friendName {
-    float:left;
-    font-weight: bold;
-    box-sizing: border-box;
-    width: 100%;
-    padding: 0 40px;
-    font-size: 32px;
-    margin-top: 20px;
+#boards, #sharedBoards {
+    @extend %itemList;
+    @media only screen and (max-width: 560px) {
+        width: 100%;
+    }
+    .board {
+        @extend %itemRow;
+        .boardName {
+            @extend %itemName;
+        }
+        &:hover {
+            background-color: $grey-2;
+            transition: background-color 0.4s ease;
+        }
+    }
 }
-
-h3.friendName {
-    margin: 0 0 15px;
+.emptyBoard {
+    @extend %emptyItemList;
 }
+/*#endregion */
 
-.itemList {
+/*#region board*/
+.boardItemForm {
+    @extend %upperForm;
+    #boardItemName {
+        margin-right: 2px;
+        width: 150px;
+    }
+    #boardItemDescription {
+        width: 300px;
+    }
+}
+.item {
+    @extend %itemRow;
+}
+.boardItemList {
     padding-top: 60px;
     overflow: auto;
 }
-
-.board {
-    &:first-child {
-        margin-top: 10px;
-    }
-    &:last-child {
-        margin-bottom:10px;
-    }
+.shareBoard {
+    @extend %appButton;
+    margin-top: 20px;
 }
-
+.deleteBoardItem {
+    @extend %deleteButton;
+}
 #toDo, #inProgress, #complete {
     width: calc(100% / 3);
     float: left;
@@ -400,6 +338,10 @@ h3.friendName {
     box-sizing: border-box;
     h2 {
         margin-top: 0;
+    }
+    @media only screen and (max-width: 767px) {
+        width: calc(100%);
+        height: auto !important;
     }
 }
 #toDo {
@@ -411,20 +353,68 @@ h3.friendName {
 #complete {
     background-color: $green-fade;
 }
+/*#endregion */
 
-@media only screen and (max-width: 767px) {
-    #toDo, #inProgress, #complete {
-        width: calc(100%);
-        height: auto !important;
+/*#region share*/
+#shareTop {
+    @extend %upperSection;
+    a {
+        @extend %appButton;
     }
 }
+/*#endregion */
 
-.pageHeader {
-    text-align: center;
-    margin: 100px 0 10px;;
-    font-size: 40px;
+/*#region friends*/
+.friendForm {
+    @extend %upperForm;
 }
+.removeFriend {
+    @extend %deleteButton;
+}
+.emptyFriends {
+    @extend %emptyItemList;
+}
+#friends {
+    @extend %itemList;
+    @media only screen and (max-width: 560px) {
+        width: 100%;
+    }
+    .friend {
+        @extend %itemRow;
+        .friendName {
+            @extend %itemName;
+            margin: 0 0 15px;
+        }
+    }
+}
+/*#endregion */
 
+/*#region account*/
+#accountPage {
+    margin-top: 80px;
+    h3 {
+        margin: 0 0 20px;
+        text-align: center;
+        font-size: 30px;
+    }
+    h4 {
+        margin: 0 0 20px;
+        text-align: center;
+        font-size: 22px;
+    }
+    #accountForms {
+        margin: 80px 0 0;
+        h3 {
+            margin: 0 0 30px;
+        }
+        .passwordForm {
+            @extend %accountForm;
+        }
+    }
+}
+/*#endregion */
+
+/*#region premium*/
 #premiumContent {
     margin: 100px 0 20px;
     text-align: center;
@@ -467,3 +457,4 @@ h3.friendName {
         }
     }
 }
+/*#endregion */

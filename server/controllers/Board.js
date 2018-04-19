@@ -2,6 +2,7 @@ const models = require('../models');
 
 const Board = models.Board;
 const BoardItem = models.BoardItem;
+const Share = models.Share;
 
 // Renders the boards page
 const makerPage = (req, res) => res.render('app', { csrfToken: req.csrfToken() });
@@ -60,13 +61,28 @@ const getBoards = (request, response) => {
   const req = request;
   const res = response;
 
-  return Board.BoardModel.findByOwner(req.session.account._id, (err, docs) => {
+  return Board.BoardModel.findByOwner(req.session.account._id, (err, boards) => {
     if (err) {
       console.log(err);
       return res.status(400).json({ error: 'An error occurred' });
     }
-
-    return res.json({ boards: docs });
+    const shareData = {
+      user: req.session.account._id,
+    };
+    return Share.ShareModel.find(shareData, (err2, sharesDoc) => {
+      if (err2) {
+        console.log(err2);
+        return res.status(400).json({ error: 'An error occurred' });
+      }
+      return Board.BoardModel.find({ _id: { $in: sharesDoc.map(shareDoc => shareDoc.board) } },
+        'name', (err3, sharedBoards) => {
+          if (err3) {
+            console.log(err3);
+            return res.status(400).json({ error: 'An error occurred' });
+          }
+          return res.json({ boards, sharedBoards });
+        });
+    });
   });
 };
 
