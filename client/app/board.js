@@ -67,22 +67,33 @@ const handleDrop = (e, status) => {
 // Creates form to make a board item through JSX
 const BoardItemForm = (props) => {
     return (
-        <div>
-            <form id="boardItemForm" 
-                name="boardItemForm"
-                onSubmit={handleBoardItem}
-                action="/board"
-                method="POST"
-                className="boardItemForm"
-                >
-                <input id="boardItemName" type="text" name="name" placeholder="Name" />   
-                <input id="boardItemDescription" type="text" name="description" placeholder="Description" />
-                <input id="clientCSRF" type="hidden" name="_csrf" value={props.csrf} />
-                <input className="makeBoardItemSubmit" type="submit" value="Make Item" />
-            </form>
-            <a className="shareBoard" href="/share">Share</a>
-        </div>
+        <form id="boardItemForm" 
+            name="boardItemForm"
+            onSubmit={handleBoardItem}
+            action="/board"
+            method="POST"
+            className="boardItemForm"
+            >
+            <input id="boardItemName" type="text" name="name" placeholder="Name" />   
+            <input id="boardItemDescription" type="text" name="description" placeholder="Description" />
+            <input id="clientCSRF" type="hidden" name="_csrf" value={props.csrf} />
+            <input className="makeBoardItemSubmit" type="submit" value="Make Item" />
+        </form>
     );
+};
+
+// Create a share button if this board can be shared
+const ShareButton = (props) => {
+    if (props.shareable) {
+        return (
+            <a className="shareBoard" href="/share">Share</a>
+        );
+    }
+    else {
+        return (
+            <div></div>
+        );
+    }
 };
 
 // Creates sections for all of the items in a board based on their status through JSX
@@ -157,6 +168,9 @@ const loadBoardItemsFromServer = () => {
                 completeArray.push(data.boardItems[i]);
             }
         }
+        ReactDOM.render(
+            <ShareButton shareable={data.shareable}  />, document.querySelector("#shareButton")
+        );
         ReactDOM.render(
             <BoardList toDo={toDoArray} inProgress={inProgressArray} 
                 complete={completeArray} />, document.querySelector("#boardItems")

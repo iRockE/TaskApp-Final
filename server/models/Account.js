@@ -8,6 +8,10 @@ const iterations = 10000;
 const saltLength = 64;
 const keyLength = 64;
 
+// mongoose.Types.ObjetcID is a function that
+// converts string ID to real mongo ID
+const convertId = mongoose.Types.ObjectId;
+
 // Represents a user account.
 const AccountSchema = new mongoose.Schema({
   username: {
@@ -100,3 +104,4 @@ AccountModel = mongoose.model('Account', AccountSchema);
 
 module.exports.AccountModel = AccountModel;
 module.exports.AccountSchema = AccountSchema;
+module.exports.convertId = convertId;

@@ -52,17 +52,24 @@ const deleteBoardItem = (req, res) => {
 
 // Returns all items for the current baord
 const getBoardItems = (req, res) => {
-  Account.AccountModel.findById(req.session.account._id, 'lastBoard', (err, docs) => {
-    if (err || !docs.lastBoard) {
+  Account.AccountModel.findById(req.session.account._id, 'lastBoard', (err, accountDoc) => {
+    if (err || !accountDoc.lastBoard) {
       return res.status(401).json({ error: 'Board not found' });
     }
-    return BoardItem.BoardItemModel.findByBoard(docs.lastBoard, (err2, docs2) => {
+    return Board.BoardModel.findById(accountDoc.lastBoard, 'owner', (err2, boardDoc) => {
       if (err2) {
         console.log(err2);
-        return res.status(400).
-          json({ error: 'An error occurred. Board Item could not be loaded.' });
+        return res.status(400).json({ error: 'An error occurred' });
       }
-      return res.json({ boardItems: docs2 });
+      const shareable = (`${req.session.account._id}` === `${Account.convertId(boardDoc.owner)}`);
+      return BoardItem.BoardItemModel.findByBoard(accountDoc.lastBoard, (err3, boardItemDocs) => {
+        if (err3) {
+          console.log(err3);
+          return res.status(400).
+            json({ error: 'An error occurred. Board Item could not be loaded.' });
+        }
+        return res.json({ boardItems: boardItemDocs, shareable });
+      });
     });
   });
 };

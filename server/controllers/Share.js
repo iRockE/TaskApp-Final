@@ -1,10 +1,27 @@
 const models = require('../models');
 
 const Account = models.Account;
+const Board = models.Board;
 const Share = models.Share;
 
 // Renders the boards page
-const sharePage = (req, res) => res.render('share', { csrfToken: req.csrfToken() });
+const sharePage = (req, res) => Account.AccountModel.findById(req.session.account._id,
+  (err, accountDoc) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({ error: 'An error occurred' });
+    }
+    return Board.BoardModel.findById(accountDoc.lastBoard, 'owner', (err2, boardDoc) => {
+      if (err2) {
+        console.log(err2);
+        return res.status(400).json({ error: 'An error occurred' });
+      }
+      if (`${req.session.account._id}` !== `${boardDoc.owner}`) {
+        return res.status(403).json({ error: 'Cannot share others\' boards' });
+      }
+      return res.render('share', { csrfToken: req.csrfToken() });
+    });
+  });
 
 // Share the current board with the given friend
 const shareFriend = (req, res) => {
@@ -16,26 +33,35 @@ const shareFriend = (req, res) => {
       console.log(err);
       return res.status(400).json({ error: 'An error occurred' });
     }
-    const shareData = {
-      user: req.body.friendID,
-      board: accountDoc.lastBoard,
-    };
-
-    const newShare = new Share.ShareModel(shareData);
-
-    const sharePromise = newShare.save();
-
-    sharePromise.then(() => res.json({ redirect: '/share' }));
-
-    sharePromise.catch((err2) => {
-      console.log(err2);
-      if (err2.code === 11000) {
-        return res.status(400).json({ error: 'Share already exists.' });
+    return Board.BoardModel.findById(accountDoc.lastBoard, 'owner', (err2, boardDoc) => {
+      if (err2) {
+        console.log(err2);
+        return res.status(400).json({ error: 'An error occurred' });
       }
-      return res.status(400).json({ error: 'An error occurred' });
-    });
+      if (`${req.session.account._id}` !== `${boardDoc.owner}`) {
+        return res.status(403).json({ error: 'Cannot share others\' boards' });
+      }
+      const shareData = {
+        user: req.body.friendID,
+        board: accountDoc.lastBoard,
+      };
 
-    return sharePromise;
+      const newShare = new Share.ShareModel(shareData);
+
+      const sharePromise = newShare.save();
+
+      sharePromise.then(() => res.json({ redirect: '/share' }));
+
+      sharePromise.catch((err3) => {
+        console.log(err3);
+        if (err3.code === 11000) {
+          return res.status(400).json({ error: 'Share already exists.' });
+        }
+        return res.status(400).json({ error: 'An error occurred' });
+      });
+
+      return sharePromise;
+    });
   });
 };
 
