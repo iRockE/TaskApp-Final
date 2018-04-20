@@ -103,7 +103,14 @@ const unfollowBoard = (req, res) => {
       console.log(err);
       return res.status(400).json({ error: 'An error occurred' });
     }
-    return res.json({ redirect: '/boards' });
+    return Account.AccountModel.findByIdAndUpdate(req.session.account._id,
+      { lastBoard: null }, (err2) => {
+        if (err2) {
+          console.log(err2);
+          return res.status(400).json({ error: 'An error occurred' });
+        }
+        return res.json({ redirect: '/boards' });
+      });
   });
 };
 

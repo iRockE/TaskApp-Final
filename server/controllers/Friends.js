@@ -1,6 +1,8 @@
 const models = require('../models');
 
 const Account = models.Account;
+const Board = models.Board;
+const Share = models.Share;
 
 // Renders the boards page
 const friendsPage = (req, res) => res.render('friends', { csrfToken: req.csrfToken() });
@@ -48,7 +50,20 @@ const removeFriend = (req, res) => {
         console.log(err);
         return res.status(400).json({ error: 'An error occurred' });
       }
-      return res.json({ redirect: '/friends' });
+      return Board.BoardModel.findByOwner(req.session.account._id, (err2, boards) => {
+        if (err2) {
+          console.log(err2);
+          return res.status(400).json({ error: 'An error occurred' });
+        }
+        return Share.ShareModel.remove({ board: { $in: boards.map(x => x._id) },
+          user: req.body.friendID }, (err3) => {
+          if (err3) {
+            console.log(err3);
+            return res.status(400).json({ error: 'An error occurred' });
+          }
+          return res.json({ redirect: '/friends' });
+        });
+      });
     });
 };
 
