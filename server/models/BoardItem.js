@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-const _ = require('underscore');
+// const _ = require('underscore');
 let BoardItemModel = {};
 
 // mongoose.Types.ObjetcID is a function that
 // converts string ID to real mongo ID
 const convertId = mongoose.Types.ObjectId;
-const setName = (name) => _.escape(name).trim();
+// const setName = (name) => _.escape(name).trim();
 
 // Represents an item on a task board.
 const BoardItemSchema = new mongoose.Schema({
@@ -14,12 +14,10 @@ const BoardItemSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    set: setName,
   },
   description: {
     type: String,
     trim: true,
-    set: setName,
   },
   status: {
     type: String,
