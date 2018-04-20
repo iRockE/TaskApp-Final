@@ -52,7 +52,14 @@ const deleteBoard = (req, res) => {
         return res.status(400).
           json({ error: 'An error occurred. Board Items could not be deleted.' });
       }
-      return res.json({ redirect: '/boards' });
+      return Share.ShareModel.remove({ board: req.body.boardID }, (err3) => {
+        if (err3) {
+          console.log(err3);
+          return res.status(400).
+            json({ error: 'An error occurred. Board Shares could not be deleted.' });
+        }
+        return res.json({ redirect: '/boards' });
+      });
     });
   });
 };
